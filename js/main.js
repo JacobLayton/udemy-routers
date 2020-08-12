@@ -1,3 +1,4 @@
+// Views for each endpoint
 var ArtistsView = Backbone.View.extend({
   render: function () {
     this.$el.html("ARTISTS VIEW");
@@ -22,8 +23,10 @@ var GenresView = Backbone.View.extend({
   },
 });
 
+// Routers
+
 var AppRouter = Backbone.Router.extend({
-  routers: {
+  routes: {
     albums: "viewAlbums",
     "albums/:albumId": "viewAlbumById",
     artists: "viewArtists",
@@ -53,3 +56,16 @@ var AppRouter = Backbone.Router.extend({
 
 var router = new AppRouter();
 Backbone.history.start();
+
+var NavView = Backbone.View.extend({
+  events: {
+    click: "onClick",
+  },
+
+  onClick: function (e) {
+    var $li = $(e.target);
+    router.navigate($li.attr("data-url"), { trigger: true });
+  },
+});
+
+var navView = new NavView({ el: "#nav" });
